@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../config/environment'
+
+require 'csv'
+print "Creating enterprises: "
+CSV.foreach("script/lat_long_osc.csv") do |row|
+  print '.'
+
+  cnpj, inutil, longitude, latitude = row
+
+  enterprise = Enterprise.find_by_cnpj cnpj
+
+  if enterprise
+    enterprise.lat = latitude
+    enterprise.lng = longitude
+    enterprise.save
+  end
+end

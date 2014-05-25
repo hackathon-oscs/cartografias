@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../config/environment'
+
+require 'csv'
+print "Creating enterprises: "
+CSV.foreach("script/mds2.csv") do |row|
+#  print '.'
+
+  cnpj, nome_fantasia, razao_social, logradouro, numero, bairro, ibge, cep, email, telefone, cod_bloco_servico, bloco_servico, atividade, inicio, fim, site, status_code, inlinks, outlinks = row
+
+  puts cnpj
+  address = logradouro.to_s + ' ' + numero.to_s + ' ' + bairro.to_s
+
+  enterprise = Enterprise.new(
+    :name => razao_social,
+    :nickname => nome_fantasia,
+    :identifier => (razao_social || nome_fantasia).to_slug,
+    :enabled => true,
+    :active => true,
+    :foundation_year => inicio,
+    :address => address,
+    :contact_phone => telefone,
+    :cnpj => cnpj,
+    :organization_website => site
+  )
+  enterprise.build_profile_osc :ibge => ibge, :cod_bloco_servico => cod_bloco_servico, :bloco_servico => bloco_servico, :utilidade_social => atividade, :inicio_convenio => inicio, :fim_convenio => fim, :site_status_code => status_code, :inlinks => inlinks, :outlinks => outlinks
+
+  enterprise.save
+end

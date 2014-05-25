@@ -551,7 +551,7 @@ private :generate_url, :url_options
     false
   end
 
-  after_create :insert_default_article_set
+# after_create :insert_default_article_set
   def insert_default_article_set
     if template
       copy_articles_from template

@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140408172149) do
+ActiveRecord::Schema.define(:version => 20140524211419) do
 
   create_table "abuse_reports", :force => true do |t|
     t.integer  "reporter_id"
@@ -375,6 +375,13 @@ ActiveRecord::Schema.define(:version => 20140408172149) do
     t.datetime "updated_at"
   end
 
+  create_table "mark_comment_as_read_plugin", :force => true do |t|
+    t.integer "comment_id"
+    t.integer "person_id"
+  end
+
+  add_index "mark_comment_as_read_plugin", ["comment_id", "person_id"], :name => "index_mark_comment_as_read_plugin_on_comment_id_and_person_id", :unique => true
+
   create_table "national_region_types", :force => true do |t|
     t.string "name"
   end
@@ -556,6 +563,21 @@ ActiveRecord::Schema.define(:version => 20140408172149) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "social_oscs_plugin_profile_osc", :force => true do |t|
+    t.text     "ibge"
+    t.text     "cod_bloco_servico"
+    t.text     "bloco_servico"
+    t.text     "utilidade_social"
+    t.text     "inicio_convenio"
+    t.text     "fim_convenio"
+    t.text     "site_status_code"
+    t.text     "inlinks"
+    t.text     "outlinks"
+    t.integer  "profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

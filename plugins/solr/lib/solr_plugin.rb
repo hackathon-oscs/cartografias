@@ -6,6 +6,13 @@ class SolrPlugin < Noosfero::Plugin
 
   include SolrPlugin::SearchHelper
 
+  if Rails.env.development?
+  # workaround for development
+  Dir.glob("#{File.dirname __FILE__}/ext/*").each do |file|
+    require_dependency file
+    end
+  end
+
   def self.plugin_name
     "Solr"
   end
